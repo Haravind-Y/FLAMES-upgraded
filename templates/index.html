@@ -1,0 +1,169 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FLAMES: Reveal Your Destiny</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="background-animation">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+    </div>
+
+    <!-- Floating particles -->
+    <div class="particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <!-- Floating hearts -->
+    <div class="floating-hearts">
+        <div class="floating-heart">💕</div>
+        <div class="floating-heart">💖</div>
+        <div class="floating-heart">💗</div>
+        <div class="floating-heart">💕</div>
+        <div class="floating-heart">💖</div>
+    </div>
+
+    <div class="container">
+        <div class="glass-card">
+            <!-- Header Section -->
+            <div class="header-section">
+                <div class="heart-badge">
+                    <svg width="60" height="60" viewBox="0 0 24 24">
+                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="url(#gradient)"/>
+                        <defs>
+                            <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#ff6b6b;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#ee5a6f;stop-opacity:1" />
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+                <h1 class="main-title">FLAMES</h1>
+                <p class="subtitle">Reveal Your Destiny</p>
+                <p class="tagline">The Original Compatibility Test</p>
+            </div>
+
+            <!-- Form Section -->
+            <form method="POST" class="flames-form">
+                {% csrf_token %}
+                
+                <div class="input-container">
+                    <div class="input-group">
+                        <label for="n1">
+                            <span class="label-icon">👤</span>
+                            Your Name
+                        </label>
+                        <input type="text" id="n1" name="n1" required placeholder="Enter your name..." autocomplete="off">
+                        <div class="input-underline"></div>
+                    </div>
+
+                    <div class="heart-divider">💘</div>
+
+                    <div class="input-group">
+                        <label for="n2">
+                            <span class="label-icon">💝</span>
+                            Crush's Name
+                        </label>
+                        <input type="text" id="n2" name="n2" required placeholder="Enter their name..." autocomplete="off">
+                        <div class="input-underline"></div>
+                    </div>
+                </div>
+
+                <button type="submit" class="calculate-btn">
+                    <span>Calculate Compatibility</span>
+                    <div class="btn-shine"></div>
+                </button>
+
+                <!-- Legend Box -->
+                <div class="legend-box">
+                    <div class="legend-title">Legend</div>
+                    <div class="legend-grid">
+                        <div class="legend-item"><span class="legend-letter">F</span> Friends</div>
+                        <div class="legend-item"><span class="legend-letter">L</span> Lovers</div>
+                        <div class="legend-item"><span class="legend-letter">A</span> Affection</div>
+                        <div class="legend-item"><span class="legend-letter">M</span> Marriage</div>
+                        <div class="legend-item"><span class="legend-letter">E</span> Enemy</div>
+                        <div class="legend-item"><span class="legend-letter">S</span> Sibling</div>
+                    </div>
+                </div>
+            </form>
+
+            <!-- Result Section -->
+            {% if result %}
+            <div class="result-section">
+                <div class="result-animation">
+                    <div class="sparkles">
+                        <span>✨</span>
+                        <span>✨</span>
+                        <span>✨</span>
+                    </div>
+                </div>
+
+                <div class="flames-display">
+                    <div class="flame-circle {% if result == 'Friends' %}active{% else %}inactive{% endif %}" data-letter="F">
+                        <span>F</span>
+                    </div>
+                    <div class="flame-circle {% if result == 'Lovers' %}active{% else %}inactive{% endif %}" data-letter="L">
+                        <span>L</span>
+                    </div>
+                    <div class="flame-circle {% if result == 'Attraction' or result == 'Affection' %}active{% else %}inactive{% endif %}" data-letter="A">
+                        <span>A</span>
+                    </div>
+                    <div class="flame-circle {% if result == 'Marriage' %}active{% else %}inactive{% endif %}" data-letter="M">
+                        <span>M</span>
+                    </div>
+                    <div class="flame-circle {% if result == 'Enemy' %}active{% else %}inactive{% endif %}" data-letter="E">
+                        <span>E</span>
+                    </div>
+                    <div class="flame-circle {% if result == 'Sibling' %}active{% else %}inactive{% endif %}" data-letter="S">
+                        <span>S</span>
+                    </div>
+                </div>
+
+                <div class="result-card">
+                    <div class="result-label">Your Destiny</div>
+                    <div class="result-value">{{ result|upper }}</div>
+                    <div class="result-emoji">
+                        {% if result == 'Lovers' %}💑
+                        {% elif result == 'Marriage' %}💍
+                        {% elif result == 'Friends' %}🤝
+                        {% elif result == 'Affection' or result == 'Attraction' %}💖
+                        {% elif result == 'Sibling' %}👯
+                        {% else %}😅
+                        {% endif %}
+                    </div>
+                </div>
+
+                <a href="/" class="try-again-btn">
+                    <span>Try Again</span>
+                    <span class="arrow">→</span>
+                </a>
+            </div>
+            {% endif %}
+
+            <!-- Footer -->
+            <div class="footer">
+                <p>Made with <span class="heart-pulse">❤️</span> for fun</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
